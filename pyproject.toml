@@ -1,0 +1,27 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pd-mcp"
+version = "0.1.0"
+description = "Basic MCP server for agentic interaction with vanilla Pure Data"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "mcp",
+]
+
+[project.scripts]
+pd-mcp = "pd_mcp.server:run"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pd_mcp"]
+
+[tool.hatch.build]
+include = [
+  "src/pd_mcp/pd_docs.json",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

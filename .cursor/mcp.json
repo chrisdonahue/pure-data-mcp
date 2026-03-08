@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "pd-mcp": {
+      "command": "/bin/zsh",
+      "args": [
+        "-lc",
+        "cd /Users/chrisdonahue/Code/pd-mcp && source .venv/bin/activate && python main.py"
+      ]
+    }
+  }
+}

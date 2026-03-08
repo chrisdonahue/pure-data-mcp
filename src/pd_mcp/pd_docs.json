@@ -1,0 +1,163 @@
+[
+  {
+    "name": "osc~",
+    "description": "Band-limited sinusoidal oscillator.",
+    "arguments": ["frequency in Hz"],
+    "inlets": ["left: frequency or phase-reset messages"],
+    "outlets": ["left: audio signal"]
+  },
+  {
+    "name": "phasor~",
+    "description": "Ramp oscillator that runs from 0 to 1.",
+    "arguments": ["frequency in Hz"],
+    "inlets": ["left: frequency", "right: phase reset"],
+    "outlets": ["left: audio signal"]
+  },
+  {
+    "name": "noise~",
+    "description": "White-noise generator.",
+    "arguments": [],
+    "inlets": [],
+    "outlets": ["left: audio signal"]
+  },
+  {
+    "name": "*~",
+    "description": "Multiply one signal or scalar by another.",
+    "arguments": ["optional constant multiplier"],
+    "inlets": ["left: signal", "right: signal or scalar"],
+    "outlets": ["left: audio signal"]
+  },
+  {
+    "name": "+~",
+    "description": "Add one signal or scalar to another.",
+    "arguments": ["optional constant addend"],
+    "inlets": ["left: signal", "right: signal or scalar"],
+    "outlets": ["left: audio signal"]
+  },
+  {
+    "name": "sig~",
+    "description": "Convert a float into a signal.",
+    "arguments": ["initial value"],
+    "inlets": ["left: float or signal"],
+    "outlets": ["left: audio signal"]
+  },
+  {
+    "name": "line~",
+    "description": "Generate audio-rate ramps from target/time pairs.",
+    "arguments": [],
+    "inlets": ["left: target time list"],
+    "outlets": ["left: audio signal"]
+  },
+  {
+    "name": "vline~",
+    "description": "Sample-accurate ramp generator for envelopes.",
+    "arguments": [],
+    "inlets": ["left: value time delay triplets"],
+    "outlets": ["left: audio signal"]
+  },
+  {
+    "name": "lop~",
+    "description": "One-pole low-pass filter.",
+    "arguments": ["cutoff frequency"],
+    "inlets": ["left: signal", "right: cutoff frequency"],
+    "outlets": ["left: filtered signal"]
+  },
+  {
+    "name": "hip~",
+    "description": "One-pole high-pass filter.",
+    "arguments": ["cutoff frequency"],
+    "inlets": ["left: signal", "right: cutoff frequency"],
+    "outlets": ["left: filtered signal"]
+  },
+  {
+    "name": "dac~",
+    "description": "Send audio to the system output.",
+    "arguments": ["optional channel numbers"],
+    "inlets": ["left/right: audio signals"],
+    "outlets": []
+  },
+  {
+    "name": "adc~",
+    "description": "Receive audio from the system input.",
+    "arguments": ["optional channel numbers"],
+    "inlets": [],
+    "outlets": ["left/right: audio signals"]
+  },
+  {
+    "name": "metro",
+    "description": "Metronome that outputs bangs at a fixed interval.",
+    "arguments": ["interval in ms"],
+    "inlets": ["left: start/stop", "right: interval"],
+    "outlets": ["left: bang"]
+  },
+  {
+    "name": "tgl",
+    "description": "Toggle GUI that outputs 0/1.",
+    "arguments": ["optional initial state"],
+    "inlets": ["left: set state"],
+    "outlets": ["left: float"]
+  },
+  {
+    "name": "bng",
+    "description": "Bang GUI button.",
+    "arguments": [],
+    "inlets": ["left: bang"],
+    "outlets": ["left: bang"]
+  },
+  {
+    "name": "float",
+    "description": "Store and output a float.",
+    "arguments": ["initial value"],
+    "inlets": ["left: bang/float", "right: set without output"],
+    "outlets": ["left: float"]
+  },
+  {
+    "name": "pack",
+    "description": "Pack atoms into a list.",
+    "arguments": ["type template such as f f s"],
+    "inlets": ["one inlet per field"],
+    "outlets": ["left: list"]
+  },
+  {
+    "name": "unpack",
+    "description": "Unpack a list into separate outputs.",
+    "arguments": ["type template such as f f s"],
+    "inlets": ["left: list"],
+    "outlets": ["one outlet per field"]
+  },
+  {
+    "name": "select",
+    "description": "Compare an incoming atom against match values.",
+    "arguments": ["match values"],
+    "inlets": ["left: value to compare"],
+    "outlets": ["bang outlets for matches", "rightmost: remainder"]
+  },
+  {
+    "name": "route",
+    "description": "Route lists or messages by selector.",
+    "arguments": ["selectors to match"],
+    "inlets": ["left: message stream"],
+    "outlets": ["one outlet per selector", "rightmost: unmatched"]
+  },
+  {
+    "name": "trigger",
+    "description": "Force evaluation order and output types.",
+    "arguments": ["output specifiers such as b f s a"],
+    "inlets": ["left: any message"],
+    "outlets": ["outputs fire right-to-left"]
+  },
+  {
+    "name": "send",
+    "description": "Send messages to a named receiver.",
+    "arguments": ["optional send symbol"],
+    "inlets": ["left: message", "right: destination symbol"],
+    "outlets": []
+  },
+  {
+    "name": "receive",
+    "description": "Receive messages from a named sender.",
+    "arguments": ["receive symbol"],
+    "inlets": [],
+    "outlets": ["left: received message"]
+  }
+]

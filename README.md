@@ -16,13 +16,13 @@ This project is intentionally shaped after the Max/MSP MCP workflow described in
 The system has two parts:
 
 1. A Python MCP server that owns an authoritative graph model of the patch.
-2. A vanilla Pd bridge patch that listens on UDP port `5000` and forwards dynamic patching messages into a named subpatch canvas.
+2. A vanilla Pd bridge patch that listens on UDP port `5000` and forwards dynamic patching messages into a managed subpatch canvas.
 
 Instead of trying to delete or mutate arbitrary objects inside Pd one-at-a-time, the server updates its graph model and resynchronizes the target canvas by sending:
 
 1. `clear`
 2. object creation messages
-3. hidden control receivers
+3. optional hidden control receivers for explicitly controllable objects
 4. connection messages
 
 That tradeoff is deliberate. It is simpler and more reliable in vanilla Pd, while still feeling agentic from the MCP client side.
@@ -109,7 +109,7 @@ Add something like this to your MCP config:
 
 1. Call `add_pd_object` a few times to create `obj`, `msg`, `text`, or atom boxes.
 2. Use `connect_pd_objects` to wire them.
-3. Use `send_message_to_object` or `set_number` to drive the patch at runtime.
+3. Only set `controllable=true` on `add_pd_object` when you want runtime tools like `send_message_to_object`, `send_bang_to_object`, or `set_number`.
 4. Call `get_patch_state` whenever the agent needs a reliable snapshot.
 
 Example object boxes:
@@ -119,6 +119,7 @@ Example object boxes:
 - `box_type="obj", text="dac~"`
 - `box_type="msg", text="440"`
 - `box_type="floatatom"`
+- `box_type="obj", text="line~", controllable=true`
 
 ## Limitations
 

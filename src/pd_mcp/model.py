@@ -25,7 +25,7 @@ class PdObject:
     receive_symbol: str | None = None
 
     def is_controllable(self) -> bool:
-        return self.box_type != "text"
+        return self.receive_symbol is not None
 
     def content_tokens(self) -> list[str]:
         return tokenize_pd_text(self.text)
@@ -89,10 +89,17 @@ class PatchModel:
     connections: list[PdConnection] = field(default_factory=list)
     next_id: int = 1
 
-    def add_object(self, box_type: BoxType, x: int, y: int, text: str = "") -> PdObject:
+    def add_object(
+        self,
+        box_type: BoxType,
+        x: int,
+        y: int,
+        text: str = "",
+        controllable: bool = False,
+    ) -> PdObject:
         object_id = f"obj-{self.next_id}"
         self.next_id += 1
-        receive_symbol = f"pdmcp-{object_id}"
+        receive_symbol = f"pdmcp-{object_id}" if controllable and box_type != "text" else None
         obj = PdObject(
             object_id=object_id,
             box_type=box_type,

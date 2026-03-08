@@ -115,6 +115,7 @@ def add_pd_object(
     position: list[int],
     box_type: BoxType,
     text: str = "",
+    controllable: bool = False,
 ) -> dict:
     """Add an object, message, comment, or atom box to the managed Pd canvas.
 
@@ -122,6 +123,8 @@ def add_pd_object(
         position: Two integers [x, y].
         box_type: One of obj, msg, text, floatatom, symbolatom.
         text: Raw Pd box text, for example "osc~ 440" or "0.2".
+        controllable: If true, add a hidden receive proxy so runtime tools like
+            send_message_to_object can target this box. Leave false for simpler patches.
     """
     if len(position) != 2:
         raise ValueError("position must be [x, y].")
@@ -131,6 +134,7 @@ def add_pd_object(
         x=int(position[0]),
         y=int(position[1]),
         text=text,
+        controllable=controllable,
     )
     sync = state.bridge.sync_model(state.model)
     return {
@@ -266,7 +270,7 @@ def set_dsp(ctx: Context, enabled: bool) -> dict:
 
 @mcp.tool()
 def send_bang_to_object(ctx: Context, object_id: str) -> dict:
-    """Send a bang into the left inlet of a managed object."""
+    """Send a bang into the left inlet of a controllable managed object."""
     state = _state(ctx)
     obj = state.model.get_object(object_id)
     if not obj.receive_symbol:
@@ -277,7 +281,7 @@ def send_bang_to_object(ctx: Context, object_id: str) -> dict:
 
 @mcp.tool()
 def send_message_to_object(ctx: Context, object_id: str, message: list[str | int | float]) -> dict:
-    """Send a Pd message into the left inlet of a managed object."""
+    """Send a Pd message into the left inlet of a controllable managed object."""
     state = _state(ctx)
     obj = state.model.get_object(object_id)
     if not obj.receive_symbol:
@@ -288,7 +292,7 @@ def send_message_to_object(ctx: Context, object_id: str, message: list[str | int
 
 @mcp.tool()
 def set_number(ctx: Context, object_id: str, value: float) -> dict:
-    """Set a floatatom or any float-accepting object by sending it a float."""
+    """Set a controllable floatatom or other float-accepting object by sending it a float."""
     state = _state(ctx)
     obj = state.model.get_object(object_id)
     if not obj.receive_symbol:

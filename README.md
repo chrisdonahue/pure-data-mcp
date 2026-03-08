@@ -2,7 +2,7 @@
 
 Basic MCP server for agentic interaction with vanilla Pure Data.
 
-This project is intentionally shaped after the Max/MSP MCP workflow described in the ISMIR 2025 late-breaking demo paper and the associated Max reference implementation, but adapted to what is practical in plain vanilla Pd:
+This project is intentionally shaped after the Max/MSP MCP workflow described in the [ISMIR 2025 late-breaking demo paper](https://ismir2025program.ismir.net/lbd_472.html) and the [associated Max reference implementation](https://github.com/tiianhk/MaxMSP-MCP-Server), but adapted to what is practical in plain vanilla Pd:
 
 - bundled object docs for in-context lookup
 - live patch creation and rewiring
